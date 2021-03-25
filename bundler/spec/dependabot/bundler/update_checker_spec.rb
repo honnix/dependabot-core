@@ -18,7 +18,7 @@ RSpec.describe Dependabot::Bundler::UpdateChecker do
       ignored_versions: ignored_versions,
       security_advisories: security_advisories,
       options: {
-        bundler_2_available: bundler_2_available?
+        bundler_2_available: PackageManagerHelper.use_bundler_2?
       }
     )
   end
@@ -196,14 +196,12 @@ RSpec.describe Dependabot::Bundler::UpdateChecker do
         "https://repo.fury.io/greysteil/api/v1/dependencies?gems=business"
       end
       before do
-        bundler_version = bundler_2_available? ? "2" : "1"
-
         # We only need to stub out the version callout since it would
         # otherwise call out to the internet in a shell command
         allow(Dependabot::Bundler::NativeHelpers).
           to receive(:run_bundler_subprocess).
           with({
-                 bundler_version: bundler_version,
+                 bundler_version: PackageManagerHelper.bundler_version,
                  function: "dependency_source_type",
                  args: anything
                }).and_call_original
@@ -211,7 +209,7 @@ RSpec.describe Dependabot::Bundler::UpdateChecker do
         allow(Dependabot::Bundler::NativeHelpers).
           to receive(:run_bundler_subprocess).
           with({
-                 bundler_version: bundler_version,
+                 bundler_version: PackageManagerHelper.bundler_version,
                  function: "private_registry_versions",
                  args: anything
                }).
