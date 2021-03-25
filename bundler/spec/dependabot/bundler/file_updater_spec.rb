@@ -883,7 +883,7 @@ RSpec.describe Dependabot::Bundler::FileUpdater do
 
         context "when a git source is specified that multiple deps use for bundler v2", :bundler_v2_only do
           let(:dependency_files) do
-            project_dependency_files("bundler2/git_source_with_multiple_deps")
+            bundler_project_dependency_files("git_source_with_multiple_deps")
           end
           let(:dependency) do
             Dependabot::Dependency.new(

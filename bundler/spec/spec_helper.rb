@@ -23,10 +23,10 @@ module PackageManagerHelper
   def self.bundler_version
     use_bundler_2? ? "2" : "1"
   end
+end
 
-  def self.bundler_project_dependency_files(project)
-    project_dependency_files(File.join("bundler#{bundler_version}", project))
-  end
+def bundler_project_dependency_files(project)
+  project_dependency_files(File.join("bundler#{PackageManagerHelper.bundler_version}", project))
 end
 
 RSpec.configure do |config|
