@@ -25,6 +25,17 @@ module PackageManagerHelper
   end
 end
 
+# Move the existing fixture method aside so we can shim in a check for old-style manifest fixtures
+alias non_project_fixture fixture
+
+def fixture(*name)
+  if PackageManagerHelper.use_bundler_2? && name.any? { |folder| %w(gemfiles gemspecs lockfiles).include? folder }
+    raise "Non-Project Fixture Loaded: '#{File.join(name)}'."
+  end
+
+  non_project_fixture(*name)
+end
+
 def bundler_project_dependency_files(project)
   project_dependency_files(File.join("bundler#{PackageManagerHelper.bundler_version}", project))
 end
