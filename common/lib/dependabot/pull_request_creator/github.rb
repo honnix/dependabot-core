@@ -12,13 +12,14 @@ module Dependabot
       attr_reader :source, :branch_name, :base_commit, :credentials,
                   :files, :pr_description, :pr_name, :commit_message,
                   :author_details, :signature_key, :custom_headers,
-                  :labeler, :reviewers, :assignees, :milestone
+                  :custom_options, :labeler, :reviewers, :assignees,
+                  :milestone
 
       def initialize(source:, branch_name:, base_commit:, credentials:,
                      files:, commit_message:, pr_description:, pr_name:,
                      author_details:, signature_key:, custom_headers:,
-                     labeler:, reviewers:, assignees:, milestone:,
-                     require_up_to_date_base:)
+                     custom_options:, labeler:, reviewers:, assignees:,
+                     milestone:, require_up_to_date_base:)
         @source                  = source
         @branch_name             = branch_name
         @base_commit             = base_commit
@@ -30,6 +31,7 @@ module Dependabot
         @author_details          = author_details
         @signature_key           = signature_key
         @custom_headers          = custom_headers
+        @custom_options          = custom_options
         @labeler                 = labeler
         @reviewers               = reviewers
         @assignees               = assignees
@@ -353,7 +355,7 @@ module Dependabot
           branch_name,
           pr_name,
           pr_description,
-          headers: custom_headers || {}
+          (custom_options || {}).merge({:header => custom_headers || {}})
         )
       rescue Octokit::UnprocessableEntity => e
         return handle_pr_creation_error(e) if e.message.include? "Error summary"

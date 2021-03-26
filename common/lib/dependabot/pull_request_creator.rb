@@ -49,7 +49,7 @@ module Dependabot
                 :commit_message_options, :vulnerabilities_fixed,
                 :reviewers, :assignees, :milestone, :branch_name_separator,
                 :branch_name_prefix, :github_redirection_service,
-                :custom_headers, :provider_metadata
+                :custom_headers, :custom_options, :provider_metadata
 
     def initialize(source:, base_commit:, dependencies:, files:, credentials:,
                    pr_message_header: nil, pr_message_footer: nil,
@@ -59,7 +59,7 @@ module Dependabot
                    branch_name_separator: "/", branch_name_prefix: "dependabot",
                    label_language: false, automerge_candidate: false,
                    github_redirection_service: DEFAULT_GITHUB_REDIRECTION_SERVICE,
-                   custom_headers: nil, require_up_to_date_base: false,
+                   custom_headers: nil, custom_options: {}, require_up_to_date_base: false,
                    provider_metadata: {}, message: nil)
       @dependencies               = dependencies
       @source                     = source
@@ -82,6 +82,7 @@ module Dependabot
       @automerge_candidate        = automerge_candidate
       @github_redirection_service = github_redirection_service
       @custom_headers             = custom_headers
+      @custom_options             = custom_options
       @require_up_to_date_base    = require_up_to_date_base
       @provider_metadata          = provider_metadata
       @message                    = message
@@ -139,6 +140,7 @@ module Dependabot
         assignees: assignees,
         milestone: milestone,
         custom_headers: custom_headers,
+        custom_options: custom_options,
         require_up_to_date_base: require_up_to_date_base?
       )
     end
