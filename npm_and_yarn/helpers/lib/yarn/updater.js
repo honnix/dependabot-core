@@ -133,8 +133,9 @@ async function updateDependencyFile(
     ignoreWorkspaceRootCheck: true,
     ignoreEngines: true,
     ignorePlatform: true,
+    includeWorkspaceDeps: true
     dev: devRequirement(requirements),
-    optional: optionalRequirement(requirements),
+    optional: optionalRequirement(requirements)
   };
   const reporter = new EventReporter();
   const config = new Config(reporter);
