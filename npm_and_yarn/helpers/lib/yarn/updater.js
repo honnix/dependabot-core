@@ -133,6 +133,7 @@ async function updateDependencyFile(
     ignoreWorkspaceRootCheck: true,
     ignoreEngines: true,
     ignorePlatform: true,
+    includeWorkspaceDeps: true
     dev: devRequirement(requirements),
     optional: optionalRequirement(requirements),
   };
